@@ -1,7 +1,5 @@
-// Single source of truth mapping the backend's slug-style enum values to
-// display labels and badge colors. Anything rendering a status pulls from here
-// so the label/color scheme only has to be updated in one place.
-
+// Centralized here (rather than in each component) so the label/color for a
+// given status only has to change in one place.
 export const STATUS_OPTIONS = [
   { value: 'not_started', label: 'Not Started', badgeClass: 'bg-gray-100 text-gray-600' },
   { value: 'materials_prepped', label: 'Materials Prepped', badgeClass: 'bg-yellow-100 text-yellow-700' },

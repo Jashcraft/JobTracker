@@ -1,17 +1,12 @@
-// REST API routes for job applications, mounted at /api/applications in server.js.
-// Standard CRUD: list all, create, update, delete.
-
 const express = require("express");
 const router = express.Router();
 const JobApplication = require("../models/JobApplication");
 
-// GET /api/applications - return every application, newest first.
 router.get("/", async (req, res) => {
   const applications = await JobApplication.find().sort({ createdAt: -1 });
   res.json(applications);
 });
 
-// POST /api/applications - create a new application.
 router.post("/", async (req, res) => {
   try {
     const application = await JobApplication.create(req.body);
@@ -23,13 +18,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /api/applications/:id - update an existing application.
 router.put("/:id", async (req, res) => {
   try {
     const application = await JobApplication.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true } // return the updated doc, and re-check enum/required rules
+      { new: true, runValidators: true } // Mongoose skips validation on update by default
     );
     if (!application) {
       return res.status(404).json({ error: "Application not found" });
@@ -40,7 +34,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE /api/applications/:id - remove an application.
 router.delete("/:id", async (req, res) => {
   const application = await JobApplication.findByIdAndDelete(req.params.id);
   if (!application) {

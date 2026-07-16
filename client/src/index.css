@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
-/* Custom color tokens for the "sleek entrepreneur" look: charcoal surfaces at
-   a few depths (950 = recessed page bg, 900 = header, 800 = cards/inputs,
-   700 = borders), plus a muted slate-blue accent (400 for links on dark
-   surfaces, 600/700 for solid buttons). */
+/* Charcoal shades form a depth hierarchy (lower number = further back).
+   accent-400 exists separately from 600/700 because 600 (used for solid
+   buttons) is too dark/low-contrast to use for text on these backgrounds. */
 @theme {
   --color-charcoal-950: #14161b;
   --color-charcoal-900: #1b1e24;

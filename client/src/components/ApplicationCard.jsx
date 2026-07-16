@@ -17,9 +17,8 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString()
 }
 
-// One application, rendered as a horizontal row on wider screens and a
-// stacked card on mobile. Status and "date applied" are editable in place;
-// everything else is set at creation time via the Add Application form.
+// Only status and dateApplied are editable here - everything else is set once
+// at creation via the Add Application form, per the brief's "edit in place" scope.
 export default function ApplicationCard({ application, onStatusChange, onDateAppliedChange, onDelete }) {
   const { _id, company, title, link, status, dateFound, dateApplied, coverLetterWritten } = application
 

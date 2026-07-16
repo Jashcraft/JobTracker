@@ -1,5 +1,3 @@
-// Entry point for the Express API server.
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -8,20 +6,18 @@ const applicationsRouter = require("./routes/applications");
 
 const app = express();
 
-// Parse JSON request bodies (needed for POST/PUT with a JSON payload).
 app.use(express.json());
 
-// Allow requests from any origin for now. This is fine for a single-user personal
-// project; tighten this to the deployed frontend's URL once one exists.
+// Open to any origin for now - fine for a single-user personal project; tighten
+// this to the deployed frontend's URL once one exists.
 app.use(cors());
 
-// All job application CRUD routes live under /api/applications.
 app.use("/api/applications", applicationsRouter);
 
-// Connect to MongoDB Atlas, then start listening only once the DB connection is live
-// so requests never hit a route before the database is ready.
 const PORT = process.env.PORT || 5000;
 
+// Wait for the DB connection before listening, so no request can hit a route
+// before Mongoose is actually ready to serve it.
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

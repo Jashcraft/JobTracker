@@ -13,7 +13,6 @@ export default function Layout() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const location = useLocation()
 
-  // Close the mobile drawer whenever the route changes.
   useEffect(() => {
     setDrawerOpen(false)
   }, [location.pathname])

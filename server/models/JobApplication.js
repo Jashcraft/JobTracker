@@ -1,5 +1,3 @@
-// Datapoints for a job application entry (collection: "jobapplications").
-
 const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema(
@@ -63,7 +61,7 @@ const jobApplicationSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // adds createdAt / updatedAt
+    timestamps: true,
   }
 );
 

@@ -1,5 +1,4 @@
-// Placeholder for the v2 stats dashboard (total applied, response rate,
-// applications per week) mentioned in PROJECT_BRIEF.md. Not built yet.
+// v2 scope per PROJECT_BRIEF.md - not built yet.
 export default function Stats() {
   return (
     <div className="mx-auto max-w-xl text-center">
