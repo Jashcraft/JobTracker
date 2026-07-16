@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/* Custom color tokens for the "sleek entrepreneur" look: charcoal surfaces at
+   a few depths (950 = recessed page bg, 900 = header, 800 = cards/inputs,
+   700 = borders), plus a muted slate-blue accent (400 for links on dark
+   surfaces, 600/700 for solid buttons). */
+@theme {
+  --color-charcoal-950: #14161b;
+  --color-charcoal-900: #1b1e24;
+  --color-charcoal-800: #262a32;
+  --color-charcoal-700: #343943;
+
+  --color-accent-400: #7fa0d6;
+  --color-accent-500: #5b7fb8;
+  --color-accent-600: #4c6ba0;
+  --color-accent-700: #3f5885;
+}
+
+html {
+  /* Tells the browser to render native form controls (select arrows, date
+     picker icons, scrollbars) with a dark-appropriate palette. */
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+}
+
+@layer components {
+  .input {
+    @apply rounded-md border border-charcoal-700 bg-charcoal-800 px-3 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500;
+  }
+}
