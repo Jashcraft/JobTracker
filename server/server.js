@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -13,6 +14,13 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/applications", applicationsRouter);
+
+// Serve the built React app and let it handle client-side routing.
+const clientDist = path.join(__dirname, "..", "client", "dist");
+app.use(express.static(clientDist));
+app.get(/^(?!\/api\/).*/, (req, res) => {
+  res.sendFile(path.join(clientDist, "index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 
