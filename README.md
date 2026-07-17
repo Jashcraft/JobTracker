@@ -36,10 +36,19 @@ git clone git@github.com:Jashcraft/JobTracker.git
 cd JobTracker
 ```
 
+Add `server/.env` (from `server/.env.example`, with your own `MONGO_URI`) and `client/.env`
+(from `client/.env.example`) first, then:
+
+```bash
+npm run install:all   # installs server/ and client/ deps
+npm run dev           # runs both dev servers together
+```
+
+Or run them separately:
+
 **Server:**
 ```bash
 cd server
-cp .env.example .env   # add your own MONGO_URI
 npm install
 npm start
 ```
@@ -47,7 +56,6 @@ npm start
 **Client:**
 ```bash
 cd client
-cp .env.example .env   # point at your local server URL
 npm install
 npm run dev
 ```
