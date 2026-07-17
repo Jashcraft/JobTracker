@@ -23,6 +23,11 @@ html {
 
 body {
   margin: 0;
+  /* The sidebar is an off-canvas `fixed` + `translate-x-full` element; some
+     mobile browsers still count its full width toward the page's scrollable
+     area even while it's translated out of view, letting the viewport creep
+     rightward and clip content. Pin it down explicitly. */
+  overflow-x: hidden;
 }
 
 @layer components {
