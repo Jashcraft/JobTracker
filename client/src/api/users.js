@@ -1,14 +1,12 @@
 import { authFetch, handleResponse } from './http'
 
-// Falls back to a relative path so the built app works same-origin in
-// production without needing VITE_API_URL set at build time.
-const BASE_URL = `${import.meta.env.VITE_API_URL ?? ''}/api/applications`
+const BASE_URL = `${import.meta.env.VITE_API_URL ?? ''}/api/users`
 
-export function getApplications() {
+export function listUsers() {
   return authFetch(BASE_URL).then(handleResponse)
 }
 
-export function createApplication(data) {
+export function createUser(data) {
   return authFetch(BASE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -16,14 +14,14 @@ export function createApplication(data) {
   }).then(handleResponse)
 }
 
-export function updateApplication(id, data) {
-  return authFetch(`${BASE_URL}/${id}`, {
+export function resetPassword(id, password) {
+  return authFetch(`${BASE_URL}/${id}/password`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ password }),
   }).then(handleResponse)
 }
 
-export function deleteApplication(id) {
+export function deleteUser(id) {
   return authFetch(`${BASE_URL}/${id}`, { method: 'DELETE' }).then(handleResponse)
 }

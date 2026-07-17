@@ -1,15 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const JobApplication = require("../models/JobApplication");
+const { requireAuth } = require("../middleware/auth");
+
+router.use(requireAuth);
 
 router.get("/", async (req, res) => {
-  const applications = await JobApplication.find().sort({ createdAt: -1 });
+  const applications = await JobApplication.find({ user: req.userId }).sort({
+    createdAt: -1,
+  });
   res.json(applications);
 });
 
 router.post("/", async (req, res) => {
   try {
-    const application = await JobApplication.create(req.body);
+    const application = await JobApplication.create({
+      ...req.body,
+      user: req.userId,
+    });
     res.status(201).json(application);
   } catch (err) {
     // Mongoose validation errors (e.g. missing required field) should be a 400,
@@ -20,8 +28,8 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const application = await JobApplication.findByIdAndUpdate(
-      req.params.id,
+    const application = await JobApplication.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId },
       req.body,
       { new: true, runValidators: true } // Mongoose skips validation on update by default
     );
@@ -35,7 +43,10 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  const application = await JobApplication.findByIdAndDelete(req.params.id);
+  const application = await JobApplication.findOneAndDelete({
+    _id: req.params.id,
+    user: req.userId,
+  });
   if (!application) {
     return res.status(404).json({ error: "Application not found" });
   }

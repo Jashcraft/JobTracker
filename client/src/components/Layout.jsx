@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', end: true },
@@ -12,6 +13,15 @@ const NAV_ITEMS = [
 export default function Layout() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+
+  const navItems = user?.role === 'admin' ? [...NAV_ITEMS, { to: '/users', label: 'Users' }] : NAV_ITEMS
+
+  function handleLogout() {
+    logout()
+    navigate('/login')
+  }
 
   useEffect(() => {
     setDrawerOpen(false)
@@ -35,7 +45,7 @@ export default function Layout() {
           Job Tracker
         </div>
         <nav className="flex flex-col gap-1 px-3">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -52,6 +62,17 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
+
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 border-t border-charcoal-700 px-4 py-3">
+          <span className="truncate text-sm text-gray-400">{user?.email}</span>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="shrink-0 rounded-md px-2 py-1 text-sm font-medium text-gray-300 hover:bg-charcoal-800 hover:text-white"
+          >
+            Log out
+          </button>
+        </div>
       </aside>
 
       <div className="flex min-h-screen flex-col md:pl-64">
