@@ -74,4 +74,38 @@ router.delete("/:id", async (req, res) => {
   res.status(204).send();
 });
 
+router.get("/:id/applications", async (req, res) => {
+  const applications = await JobApplication.find({ user: req.params.id }).sort({
+    createdAt: -1,
+  });
+  res.json(applications);
+});
+
+router.put("/:id/applications/:appId", async (req, res) => {
+  try {
+    const application = await JobApplication.findOneAndUpdate(
+      { _id: req.params.appId, user: req.params.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!application) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+    res.json(application);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+router.delete("/:id/applications/:appId", async (req, res) => {
+  const application = await JobApplication.findOneAndDelete({
+    _id: req.params.appId,
+    user: req.params.id,
+  });
+  if (!application) {
+    return res.status(404).json({ error: "Application not found" });
+  }
+  res.status(204).send();
+});
+
 module.exports = router;
