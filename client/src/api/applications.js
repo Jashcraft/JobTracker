@@ -1,4 +1,6 @@
-const BASE_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:5000'}/api/applications`
+// Falls back to a relative path so the built app works same-origin in
+// production without needing VITE_API_URL set at build time.
+const BASE_URL = `${import.meta.env.VITE_API_URL ?? ''}/api/applications`
 
 async function handleResponse(res) {
   if (!res.ok) {
